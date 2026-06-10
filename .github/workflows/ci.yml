@@ -27,22 +27,16 @@ jobs:
         run: nuget restore DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj
 
       - name: Build WinForms project
-        run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.csproj /p:Configuration=Release /p:Platform="Any CPU"
+        run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.csproj /p:Configuration=Release /p:Platform=AnyCPU
 
       - name: Build Test project
-        run: msbuild DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj /p:Configuration=Release /p:Platform="Any CPU"
+        run: msbuild DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj /p:Configuration=Release /p:Platform=AnyCPU
 
       - name: Debug output files
         shell: pwsh
         run: |
-          Write-Host "===== Current Directory ====="
-          Get-Location
-
           Write-Host "===== All DLL files ====="
           Get-ChildItem -Path . -Recurse -Filter "*.dll" | Select-Object FullName
-
-          Write-Host "===== Test project bin folder ====="
-          Get-ChildItem -Path "DevOpsWinFormsDemo.Tests" -Recurse | Select-Object FullName
 
       - name: Run tests
         shell: pwsh
