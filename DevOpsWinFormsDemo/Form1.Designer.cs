@@ -31,6 +31,14 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.idtb = new System.Windows.Forms.TextBox();
+            this.pwtb = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnOk = new System.Windows.Forms.Button();
+            this.statuslb = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStart
@@ -63,17 +71,86 @@
             this.lblStatus.Text = "idle";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // idtb
+            // 
+            this.idtb.Location = new System.Drawing.Point(106, 91);
+            this.idtb.Name = "idtb";
+            this.idtb.Size = new System.Drawing.Size(277, 35);
+            this.idtb.TabIndex = 3;
+            // 
+            // pwtb
+            // 
+            this.pwtb.Location = new System.Drawing.Point(106, 160);
+            this.pwtb.Name = "pwtb";
+            this.pwtb.Size = new System.Drawing.Size(277, 35);
+            this.pwtb.TabIndex = 4;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.statuslb);
+            this.panel1.Controls.Add(this.btnOk);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.pwtb);
+            this.panel1.Controls.Add(this.idtb);
+            this.panel1.Location = new System.Drawing.Point(1048, 126);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(470, 327);
+            this.panel1.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(40, 102);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(27, 24);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "id";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(40, 171);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 24);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "pw";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnOk
+            // 
+            this.btnOk.Location = new System.Drawing.Point(139, 233);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(167, 54);
+            this.btnOk.TabIndex = 8;
+            this.btnOk.Text = "OK";
+            this.btnOk.UseVisualStyleBackColor = true;
+            // 
+            // statuslb
+            // 
+            this.statuslb.AutoSize = true;
+            this.statuslb.Location = new System.Drawing.Point(189, 41);
+            this.statuslb.Name = "statuslb";
+            this.statuslb.Size = new System.Drawing.Size(83, 24);
+            this.statuslb.TabIndex = 9;
+            this.statuslb.Text = "Logout";
+            this.statuslb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1626, 745);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,6 +161,13 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.TextBox idtb;
+        private System.Windows.Forms.TextBox pwtb;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label statuslb;
     }
 }
 

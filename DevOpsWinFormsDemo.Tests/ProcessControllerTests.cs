@@ -62,5 +62,49 @@ namespace DevOpsWinFormsDemo.Tests
             Assert.IsFalse(controller.IsRunning);
             Assert.AreEqual("Process is not running.", result);
         }
+
+        [TestMethod]
+        public void Success_Login_Id()
+        {
+            var controller = new ProcessController();
+
+            bool issuccess = controller.ID("rorze");
+
+            Assert.IsTrue(issuccess);
+
+        }
+
+        [TestMethod]
+        public void fail_Login_Id()
+        {
+            var controller = new ProcessController();
+
+            bool isfail = controller.ID("ror");
+
+            Assert.IsFalse(isfail);
+        }
+
+        [TestMethod]
+        public void Success_Login_Pw()
+        {
+            var controller = new ProcessController();
+
+            bool issuccess = controller.PW("123");
+
+            Assert.IsTrue(issuccess);
+        }
+
+        [TestMethod]
+        public void Success_Login_Full()
+        {
+            var controller = new ProcessController();
+
+            bool is_success_id = controller.ID("rorze");
+            bool is_success_pw = controller.PW("123");
+
+            Assert.IsTrue(is_success_id);
+            Assert.IsTrue(is_success_pw);
+        }
+
     }
 }

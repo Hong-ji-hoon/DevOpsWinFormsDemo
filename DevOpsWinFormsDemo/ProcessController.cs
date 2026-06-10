@@ -31,5 +31,19 @@ namespace DevOpsWinFormsDemo
             IsRunning = false;
             return "Process stopped.";
         }
+
+        public bool ID(String id)
+        {
+            if(id == "rorze")
+                return true;
+            else return false;
+        }
+
+        public bool PW(String pw)
+        {
+            if(pw == "123") return true;
+            else return false;
+        }
+
     }
 }

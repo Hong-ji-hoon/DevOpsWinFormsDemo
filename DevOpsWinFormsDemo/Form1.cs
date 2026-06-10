@@ -33,5 +33,21 @@ namespace DevOpsWinFormsDemo
             string result = _controller.Stop();
             lblStatus.Text = result;
         }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            string id = idtb.Text;
+            string pw = pwtb.Text;
+            bool isexistid = _controller.ID(id);
+            bool isexistpw = _controller.PW(pw);
+
+            if (isexistid && isexistpw) statuslb.Text = "Login";
+            else
+            {
+                statuslb.Text = "Fail";
+                idtb.Clear();
+                pwtb.Clear();
+            }
+        }
     }
 }
