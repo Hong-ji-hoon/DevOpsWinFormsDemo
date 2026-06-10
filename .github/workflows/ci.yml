@@ -20,11 +20,22 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-      - name: Restore NuGet packages
+      - name: Restore WinForms packages
         run: nuget restore DevOpsWinFormsDemo\DevOpsWinFormsDemo.sln
 
-      - name: Build solution
-        run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.sln /p:Configuration=Release /p:Platform="Any CPU"
+      - name: Restore Test packages
+        run: nuget restore DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj
+
+      - name: Build WinForms project
+        run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.csproj /p:Configuration=Release /p:Platform="AnyCPU"
+
+      - name: Build Test project
+        run: msbuild DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj /p:Configuration=Release /p:Platform="AnyCPU"
+
+      - name: Find test dlls
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path . -Recurse -Filter "*Tests.dll" | Select-Object FullName
 
       - name: Run tests
         shell: pwsh
