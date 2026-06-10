@@ -23,58 +23,8 @@ jobs:
       - name: Restore WinForms packages
         run: nuget restore DevOpsWinFormsDemo\DevOpsWinFormsDemo.sln
 
-      - name: Restore Test packages
-        run: nuget restore DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj
-
       - name: Build WinForms project
         run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.csproj /p:Configuration=Release /p:Platform=AnyCPU
 
-      - name: Build Test project
-        run: msbuild DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj /p:Configuration=Release /p:Platform=AnyCPU
-
-      - name: Show all DLL files
-        shell: pwsh
-        run: |
-          Write-Host "===== All DLL files ====="
-          Get-ChildItem -Path . -Recurse -Filter "*.dll" | ForEach-Object {
-            Write-Host $_.FullName
-          }
-
       - name: Run tests
-        shell: pwsh
-        run: |
-          $vstest = "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
-
-          Write-Host "===== Checking vstest path ====="
-          Write-Host $vstest
-
-          if (!(Test-Path $vstest)) {
-            Write-Error "vstest.console.exe not found."
-            exit 1
-          }
-
-          Write-Host "===== Searching test DLLs ====="
-
-          $testDlls = Get-ChildItem -Path . -Recurse -Filter "*.dll" |
-            Where-Object {
-              $_.FullName -notlike "*\obj\*" -and
-              $_.FullName -like "*\bin\*" -and
-              (
-                $_.Name -like "*Test*.dll" -or
-                $_.Name -like "*Tests*.dll"
-              )
-            }
-
-          $testDlls | ForEach-Object {
-            Write-Host "Found test dll: $($_.FullName)"
-          }
-
-          if ($testDlls.Count -eq 0) {
-            Write-Error "No test DLLs found."
-            exit 1
-          }
-
-          foreach ($dll in $testDlls) {
-            Write-Host "Running tests in $($dll.FullName)"
-            & $vstest $dll.FullName
-          }
+        run: dotnet test DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj --configuration Release --no-restore --logger trx
