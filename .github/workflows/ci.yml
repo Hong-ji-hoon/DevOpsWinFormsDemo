@@ -27,23 +27,30 @@ jobs:
         run: nuget restore DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj
 
       - name: Build WinForms project
-        run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.csproj /p:Configuration=Release /p:Platform="AnyCPU"
+        run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.csproj /p:Configuration=Release /p:Platform="Any CPU"
 
       - name: Build Test project
-        run: msbuild DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj /p:Configuration=Release /p:Platform="AnyCPU"
+        run: msbuild DevOpsWinFormsDemo.Tests\DevOpsWinFormsDemo.Tests.csproj /p:Configuration=Release /p:Platform="Any CPU"
 
-      - name: Find test dlls
+      - name: Debug output files
         shell: pwsh
         run: |
-          Get-ChildItem -Path . -Recurse -Filter "*Tests.dll" | Select-Object FullName
+          Write-Host "===== Current Directory ====="
+          Get-Location
+
+          Write-Host "===== All DLL files ====="
+          Get-ChildItem -Path . -Recurse -Filter "*.dll" | Select-Object FullName
+
+          Write-Host "===== Test project bin folder ====="
+          Get-ChildItem -Path "DevOpsWinFormsDemo.Tests" -Recurse | Select-Object FullName
 
       - name: Run tests
         shell: pwsh
         run: |
           $vstest = "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
 
-          $testDlls = Get-ChildItem -Path . -Recurse -Filter "*Tests.dll" |
-            Where-Object { $_.FullName -like "*\bin\Release\*" }
+          $testDlls = Get-ChildItem -Path "DevOpsWinFormsDemo.Tests" -Recurse -Filter "*.dll" |
+            Where-Object { $_.FullName -like "*\bin\Release\*" -and $_.Name -like "*Tests.dll" }
 
           if ($testDlls.Count -eq 0) {
             Write-Error "No test DLLs found."
@@ -51,5 +58,6 @@ jobs:
           }
 
           foreach ($dll in $testDlls) {
+            Write-Host "Running tests in $($dll.FullName)"
             & $vstest $dll.FullName
           }
