@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: Checkout source code
@@ -24,7 +24,21 @@ jobs:
         run: nuget restore DevOpsWinFormsDemo\DevOpsWinFormsDemo.sln
 
       - name: Build solution
-        run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.sln /p:Configuration=Release
+        run: msbuild DevOpsWinFormsDemo\DevOpsWinFormsDemo.sln /p:Configuration=Release /p:Platform="Any CPU"
 
       - name: Run tests
-        run: vstest.console.exe **\bin\Release\*Tests.dll
+        shell: pwsh
+        run: |
+          $vstest = "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
+
+          $testDlls = Get-ChildItem -Path . -Recurse -Filter "*Tests.dll" |
+            Where-Object { $_.FullName -like "*\bin\Release\*" }
+
+          if ($testDlls.Count -eq 0) {
+            Write-Error "No test DLLs found."
+            exit 1
+          }
+
+          foreach ($dll in $testDlls) {
+            & $vstest $dll.FullName
+          }
